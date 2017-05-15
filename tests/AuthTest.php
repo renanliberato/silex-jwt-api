@@ -1,24 +1,20 @@
 <?php
 
-use Silex\WebTestCase;
-
-class AuthTest extends WebTestCase
+class AuthTest extends AbstractTest
 {
-    public function createApplication()
-    {
-        $app = require __DIR__.'/../src/app.php';
-        require __DIR__.'/../config/dev.php';
-        require __DIR__.'/../src/controllers.php';
-        $app['session.test'] = true;
-
-        return $this->app = $app;
-    }
-
-    public function testEmptyBodyReturns400()
+    public function testInvalidMethodGet()
     {
         $client = $this->createClient();
-        $crawler = $client->request('POST', '/auth', array(), array(), array(), 'ofqwjfçowe');
+        $client->request('GET', '/auth');
 
-        $this->assertEquals(400, $client->getResponse()->getStatusCode());
+        $this->assertEquals(405, $client->getResponse()->getStatusCode());
+    }
+
+    public function testEmptyPost()
+    {
+        $client = $this->createClient();
+        $client->request('POST', '/auth');
+
+        $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }
 }
