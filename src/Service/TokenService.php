@@ -36,24 +36,24 @@ class TokenService
         $this->key = $key;
     }
 
-    public function getAccessToken($email)
+    public function getAccessToken($username)
     {
         $builder = new Builder();
         $builder
             ->setIssuedAt(strtotime('now'))
             ->setExpiration(strtotime('+5 minutes'))
-            ->set('email', $email);
+            ->set('username', $username);
 
         return $builder->getToken();
     }
 
-    public function getRenewToken($email)
+    public function getRenewToken($username)
     {
         $builder = new Builder();
         $builder
             ->setIssuedAt(strtotime('now'))
             ->setExpiration(strtotime('+20 minutes'))
-            ->set('email', $email);
+            ->set('username', $username);
 
         return $builder->getToken();
     }
