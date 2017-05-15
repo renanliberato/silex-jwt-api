@@ -13,7 +13,11 @@ class AbstractTest extends WebTestCase
 
         $app['session.test'] = true;
 
+        require __DIR__.'/../src/services.php';
+
         require __DIR__.'/../src/controllers.php';
+
+        require __DIR__.'/../src/routes.php';
 
         $this->app = $app;
 
