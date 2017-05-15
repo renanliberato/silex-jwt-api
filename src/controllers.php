@@ -8,5 +8,5 @@ use App\Controller\AuthController;
  * @return AuthController
  */
 $app['auth.controller'] = function() use ($app) {
-    return new AuthController($app['app.service.tokenService']);
+    return new AuthController($app['app.service.tokenService'], $app['app.dao.userDAO']);
 };
