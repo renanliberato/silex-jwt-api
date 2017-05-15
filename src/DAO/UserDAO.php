@@ -16,9 +16,9 @@ class UserDAO
         $user = $this->conn->fetchAssoc("SELECT * FROM user WHERE username = ?", array($username));
 
         if ($user && password_verify($password, $user['password'])) {
-            return $user['id'];
+            return $user;
         }
 
-        return $id;
+        return null;
     }
 }
