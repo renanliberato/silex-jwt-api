@@ -32,4 +32,32 @@ class AuthTest extends AbstractTest
 
         $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }
+
+    public function testValidUserAndInvalidPassword()
+    {
+        $body = [
+            'username' => 'superuser',
+            'password' => 'alsçjdfald'
+        ];
+
+        $client = $this->createClient();
+        $client->request('POST', '/auth', array(), array(), array(), json_encode($body));
+
+        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+    }
+
+    public function testValidUserAndValidPassword()
+    {
+        $body = [
+            'username' => 'superuser',
+            'password' => 'superuser'
+        ];
+
+        $client = $this->createClient();
+        $client->request('POST', '/auth', array(), array(), array(), json_encode($body));
+
+        $bodyObject = json_decode((string) $client->getResponse()->getContent());
+        
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
 }

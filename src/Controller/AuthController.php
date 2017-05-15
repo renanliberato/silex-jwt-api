@@ -48,6 +48,8 @@ class AuthController
             if (!$userId) {
                 return new Response('', 401);
             }
+
+            return new Response('', 200);
         } catch (\Exception $e) {
             return new Response('', 401);
         }
