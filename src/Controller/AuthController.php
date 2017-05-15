@@ -43,13 +43,17 @@ class AuthController
         $password = $body->password;
 
         try {
-            $userId = $this->userDAO->getByUsernameAndPassword($username, $password);
+            $user = $this->userDAO->getByUsernameAndPassword($username, $password);
 
-            if (!$userId) {
+            if (!$user) {
                 return new Response('', 401);
             }
 
-            return new Response('', 200);
+            $accessToken = (string)$this->tokenService->getAccessToken($user['username']);
+
+            return new Response(json_encode([
+                'access' => $accessToken
+            ]), 200);
         } catch (\Exception $e) {
             return new Response('', 401);
         }

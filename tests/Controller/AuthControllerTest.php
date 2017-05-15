@@ -2,6 +2,8 @@
 
 namespace AppTest\Controller;
 
+use Lcobucci\JWT\Parser;
+
 class AuthTest extends AbstractTest
 {
     public function testInvalidMethodGet()
@@ -60,4 +62,42 @@ class AuthTest extends AbstractTest
         
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
+
+    public function testAccessTokenReturned()
+    {
+        $body = [
+            'username' => 'superuser',
+            'password' => 'superuser'
+        ];
+
+        $client = $this->createClient();
+        $client->request('POST', '/auth', array(), array(), array(), json_encode($body));
+
+        $bodyObject = json_decode((string) $client->getResponse()->getContent());
+        
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertObjectHasAttribute('access', $bodyObject);
+
+        $accessToken = $bodyObject->access;
+
+        $this->assertInternalType('string', $accessToken);
+
+        return $accessToken;
+    }
+
+    /**
+     * @depends testAccessTokenReturned
+     */
+    public function testAccessTokenIsValid($accessToken)
+    {
+        $this->assertEquals(3, count(explode('.', $accessToken)));
+
+        $token  = (new Parser())->parse($accessToken);
+        $claims = $token->getClaims();
+        
+        $this->arrayHasKey('iat', $claims);
+        $this->arrayHasKey('exp', $claims);
+        $this->arrayHasKey('username', $claims);
+    }
+
 }
