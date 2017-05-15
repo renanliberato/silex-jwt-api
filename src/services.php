@@ -1,5 +1,6 @@
 <?php
 
+use App\DAO\UserDAO;
 use App\Service\TokenService;
 use Lcobucci\JWT\Builder;
 use Silex\Provider\DoctrineServiceProvider;
@@ -25,3 +26,9 @@ $app['app.service.tokenService'] = $app->factory(function() {
 
     return new TokenService($key);
 });
+
+$app['app.dao.userDAO'] = $app->factory(function($app) {
+
+    return new UserDAO($app['db']);
+});
+
