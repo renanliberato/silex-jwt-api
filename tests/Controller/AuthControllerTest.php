@@ -1,5 +1,7 @@
 <?php
 
+namespace AppTest\Controller;
+
 class AuthTest extends AbstractTest
 {
     public function testInvalidMethodGet()
