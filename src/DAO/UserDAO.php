@@ -13,7 +13,11 @@ class UserDAO
 
     public function getByUsernameAndPassword($username, $password)
     {
-        $id = $this->conn->fetchColumn("SELECT id FROM user WHERE username = ? AND password = ?", array($username, $password));
+        $user = $this->conn->fetchAssoc("SELECT * FROM user WHERE username = ?", array($username));
+
+        if ($user && password_verify($password, $user['password'])) {
+            return $user['id'];
+        }
 
         return $id;
     }
