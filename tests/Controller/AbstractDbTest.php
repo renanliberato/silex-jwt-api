@@ -56,7 +56,7 @@ class AbstractTest extends WebTestCase
         $conn->insert('user', array(
             'id' => 1,
             'username' => 'superuser',
-            'password' => 'superuser'
+            'password' => password_hash('superuser', PASSWORD_BCRYPT)
         ));
     }
 
