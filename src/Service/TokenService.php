@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use App\Service\ClockInterface;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
 
@@ -14,6 +15,13 @@ class TokenService
      * @var Builder
      */
     private $builder;
+
+    /**
+     * Clock service
+     *
+     * @var ClockInterface
+     */
+    private $clock;
 
     /**
      * Token signer
@@ -29,10 +37,11 @@ class TokenService
      */
     private $key;
 
-    public function __construct($key)
+    public function __construct(ClockInterface $clock, $key)
     {
         $this->builder = new Builder();
         $this->signer = new Sha256();
+        $this->clock = $clock;
         $this->key = $key;
     }
 
@@ -40,8 +49,8 @@ class TokenService
     {
         $builder = new Builder();
         $builder
-            ->setIssuedAt(strtotime('now'))
-            ->setExpiration(strtotime('+5 minutes'))
+            ->setIssuedAt($this->clock->now())
+            ->setExpiration($this->clock->plusFiveMinutes())
             ->set('username', $username);
 
         return $builder->getToken();
@@ -51,8 +60,8 @@ class TokenService
     {
         $builder = new Builder();
         $builder
-            ->setIssuedAt(strtotime('now'))
-            ->setExpiration(strtotime('+20 minutes'))
+            ->setIssuedAt($this->clock->now())
+            ->setExpiration($this->clock->plusTwentyMinutes())
             ->set('username', $username);
 
         return $builder->getToken();

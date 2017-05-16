@@ -2,6 +2,7 @@
 
 use App\DAO\UserDAO;
 use App\Service\TokenService;
+use App\Service\Clock;
 use Lcobucci\JWT\Builder;
 use Silex\Provider\DoctrineServiceProvider;
 
@@ -24,7 +25,7 @@ $app['db']->connect();
 $app['app.service.tokenService'] = $app->factory(function() {
     $key = parse_ini_file(__DIR__.'/../config/settings.ini')['key'];
 
-    return new TokenService($key);
+    return new TokenService(new Clock(), $key);
 });
 
 $app['app.dao.userDAO'] = $app->factory(function($app) {
