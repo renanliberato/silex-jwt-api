@@ -100,4 +100,41 @@ class AuthTest extends AbstractTest
         $this->arrayHasKey('username', $claims);
     }
 
+    public function testRenewTokenReturned()
+    {
+        $body = [
+            'username' => 'superuser',
+            'password' => 'superuser'
+        ];
+
+        $client = $this->createClient();
+        $client->request('POST', '/auth', array(), array(), array(), json_encode($body));
+
+        $bodyObject = json_decode((string) $client->getResponse()->getContent());
+        
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertObjectHasAttribute('renew', $bodyObject);
+
+        $renewToken = $bodyObject->renew;
+
+        $this->assertInternalType('string', $renewToken);
+
+        return $renewToken;
+    }
+
+    /**
+     * @depends testRenewTokenReturned
+     */
+    public function testRenewTokenIsValid($renewToken)
+    {
+        $this->assertEquals(3, count(explode('.', $renewToken)));
+
+        $token  = (new Parser())->parse($renewToken);
+        $claims = $token->getClaims();
+        
+        $this->arrayHasKey('iat', $claims);
+        $this->arrayHasKey('exp', $claims);
+        $this->arrayHasKey('username', $claims);
+    }
+
 }
