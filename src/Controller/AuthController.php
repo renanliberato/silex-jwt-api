@@ -27,7 +27,7 @@ class AuthController
 
     public function __construct(TokenService $tokenService, UserDAO $userDAO)
     {
-        $this->userDAO    = $userDAO;
+        $this->userDAO      = $userDAO;
         $this->tokenService = $tokenService;
     }
 
