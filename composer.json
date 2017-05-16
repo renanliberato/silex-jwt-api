@@ -44,6 +44,16 @@
         ],
         "test": [
             "vendor\\bin\\phpunit --colors"
+        ],
+        "test:unit": [
+            "vendor\\bin\\phpunit.bat --colors --testsuite unit"
+        ],
+        "test:integration": [
+            "vendor\\bin\\phpunit.bat --colors --testsuite integration"
+        ],
+        "test:coverage:html": [
+            "vendor\\bin\\phpunit.bat --colors --testsuite unit --coverage-html docs\\coverage",
+            "start chrome docs\\coverage\\index.html"
         ]
     },
     "require-dev": {
