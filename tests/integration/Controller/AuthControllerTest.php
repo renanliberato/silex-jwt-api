@@ -1,7 +1,5 @@
 <?php
 
-namespace AppTest\Controller;
-
 use Lcobucci\JWT\Parser;
 
 class AuthTest extends AbstractTest

@@ -1,7 +1,5 @@
 <?php
 
-namespace AppTest\Controller;
-
 use Silex\WebTestCase;
 
 class AbstractTest extends WebTestCase
@@ -9,17 +7,17 @@ class AbstractTest extends WebTestCase
 
     public function createApplication()
     {
-        $app = require __DIR__.'/../../src/app.php';
+        $app = require __DIR__.'/../../../src/app.php';
 
-        require __DIR__.'/../../config/dev.php';
+        require __DIR__.'/../../../config/dev.php';
 
         $app['session.test'] = true;
 
-        require __DIR__.'/../../src/services.php';
+        require __DIR__.'/../../../src/services.php';
 
-        require __DIR__.'/../../src/controllers.php';
+        require __DIR__.'/../../../src/controllers.php';
 
-        require __DIR__.'/../../src/routes.php';
+        require __DIR__.'/../../../src/routes.php';
 
         $this->app = $app;
 
