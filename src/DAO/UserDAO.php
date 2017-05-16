@@ -21,4 +21,9 @@ class UserDAO
 
         return null;
     }
+
+    public function getConn()
+    {
+        return $this->conn;
+    }
 }
