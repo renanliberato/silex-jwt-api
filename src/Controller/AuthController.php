@@ -50,9 +50,11 @@ class AuthController
             }
 
             $accessToken = (string)$this->tokenService->getAccessToken($user['username']);
+            $renewToken  = (string)$this->tokenService->getRenewToken($user['username']);
 
             return new Response(json_encode([
-                'access' => $accessToken
+                'access' => $accessToken,
+                'renew'  => $renewToken
             ]), 200);
         } catch (\Exception $e) {
             return new Response('', 401);
