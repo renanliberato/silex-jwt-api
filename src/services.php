@@ -10,7 +10,7 @@ use Silex\Provider\DoctrineServiceProvider;
 
 $db = __DIR__.'/../db/';
 
-if ($app['session.test']) {
+if (isset($app['session.test']) && $app['session.test']) {
     $db .= 'app_test.db';
 } else {
     $db .= 'app.db';
