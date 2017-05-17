@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$app->post('/auth', "auth.controller:authenticate");
+$app->post('/auth', "controller.authenticate:process");
 
 $app->error(function (\Exception $e, Request $request, $code) use ($app) {
 

@@ -2,7 +2,7 @@
 
 use Lcobucci\JWT\Parser;
 
-class AuthTest extends AbstractTest
+class AuthenticateTest extends AbstractTest
 {
     public function testInvalidMethodGet()
     {

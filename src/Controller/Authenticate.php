@@ -13,7 +13,7 @@ use App\Service\TokenService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthController
+class Authenticate
 {
     /**
      * @var UserDAO
@@ -31,7 +31,7 @@ class AuthController
         $this->tokenService = $tokenService;
     }
 
-    public function authenticate(Request $request)
+    public function process(Request $request)
     {
         $body = json_decode($request->getContent());
 
