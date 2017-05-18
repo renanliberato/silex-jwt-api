@@ -35,7 +35,7 @@ class Authenticate
     {
         $body = json_decode($request->getContent());
 
-        if (empty($body)) {
+        if (empty($body) || !isset($body->username) || !isset($body->password)) {
             return new Response('', 401);
         }
 
